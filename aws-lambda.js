@@ -1,16 +1,29 @@
 const mysql = require('mysql');
 
 const con = mysql.createConnection({
-  host: process.env.RDS_HOSTNAME,
-  user: process.env.RDS_USERNAME,
-  password: process.env.RDS_PASSWORD,
-  port: process.env.RDS_PORT
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASS,
+  port: process.env.MYSQLPORT,
+  database: process.env.MYSQLDATABASE
 });
 
 exports.handler = (event, context, callback) => {
   
-  const requestBody = JSON.parse(event.body);
+  
+  context.callbackWaitsForEmptyEventLoop = false;
 
+  const response = {
+      statusCode: 200,
+      body: JSON.stringify({
+          message: 'SQS event processed.',
+          input: event,
+      }),
+  };
+  var body = event.Records[0].body;
+    
+  const requestBody = JSON.parse(body.replace(/\\/g, ""));
+  
   try{
     requestBody.forEach(async(item) => {
       const phrase_sql = `SELECT * FROM search_volume WHERE phrase=${item.phrase}`;
@@ -106,4 +119,3 @@ const handleVolumeData = async (phrase_id, item) => {
     }
   })
 }
-
