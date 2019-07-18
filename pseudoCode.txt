@@ -1,0 +1,54 @@
+
+
+
+
+exports.handler = (event, context, callback) => { 
+
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify({
+            message: 'SQS event processed.',
+            input: event,
+        }),
+    };
+    var body = event.Records[0].body;
+
+
+	foreach (body as phrase) {
+		sql = "select * from phrases where phrase_name = phrase.phrase"
+		if (sql) {
+			"update phrases set update_time=now() where id = sql.id"
+			return phrase.id from the DB
+		}
+		else {
+			"insert into phrases...."
+			return phrase.id from the DB
+		}
+
+		sql1 = "select * from data WHERE phrase_id = phrase.id AND volume_type = 'estimate' and volume_date = phrase.volumeEstimatedAt and volume = phrase.volumeEstimate"
+		if (sql1) {
+			update update_time=now()
+		} else {
+			insert 
+		}
+
+		foreach (phrase.volumeEstimateHistorical as volumeHistorical) {
+
+				sql2 = "select * from data WHERE phrase_id = phrase.id AND volume_type = 'estimate' and volume_date = volumeHistorical.dateTime and volume = volumeHistorical.value"
+				if (sql2) {
+					update update_time=now()
+				} else {
+					insert 
+				}
+		}
+
+		foreach (phrase.volumeExactHistorical as volumeExact) {
+
+			sql2 = "select * from data WHERE phrase_id = phrase.id AND volume_type = 'exact' and volume_date = volumeExact.dateTime and volume = volumeExact.value"
+			if (sql2) {
+				update update_time=now()
+			} else {
+				insert 
+			}
+		}
+	}

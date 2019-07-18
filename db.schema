@@ -1,0 +1,25 @@
+-- Create syntax for TABLE 'search_volume'
+CREATE TABLE `search_volume` (
+  `phrase_id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `phrase` varchar(150) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`phrase_id`),
+  UNIQUE KEY `phrase` (`phrase`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Create syntax for TABLE 'search_volume_data'
+CREATE TABLE `search_volume_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `phrase_id` int(11) DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `source` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `marketplace` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `volume` int(11) NOT NULL,
+  `volume_type` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `volume_date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_FCDEC1D28671F084` (`phrase_id`),
+  CONSTRAINT `FK_FCDEC1D28671F084` FOREIGN KEY (`phrase_id`) REFERENCES `search_volume` (`phrase_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
